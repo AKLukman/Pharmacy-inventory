@@ -11,7 +11,7 @@ const AppointmentBanner = ({ selectedDate, setSelectedDate }) => {
           <img
             src={chair}
             alt="dentist chair"
-            className="max-w-sm rounded-lg shadow-2xl"
+            className="max-w-sm rounded-lg  shadow-2xl"
           />
           <div className="mr-6 sm:w-full">
             <DayPicker

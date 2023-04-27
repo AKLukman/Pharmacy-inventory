@@ -1,17 +1,22 @@
 import { format } from "date-fns";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import AppointmentModal from "../AppointmentModal/AppointmentModal";
 import AppointmentOptions from "./AppointmentOptions";
+import { useQuery } from "react-query";
 
 const AvailableAppointment = ({ selectedDate, setSelectedDate }) => {
-  const [appoimentOptions, setAppointmentOptions] = useState([]);
+  // const [appoimentOptions, setAppointmentOptions] = useState([]);
   const [treatment, setTreatment] = useState(null);
+  const date = format(selectedDate, "PP");
 
-  useEffect(() => {
-    fetch("AppointmentOptions.json")
-      .then((res) => res.json())
-      .then((data) => setAppointmentOptions(data));
-  }, []);
+  const { data: appoimentOptions = [], refetch } = useQuery({
+    queryKey: ["appointmentOptions", date],
+    queryFn: () =>
+      fetch(
+        `http://localhost:5000/api/v1/pharmacy/appointmentOptions?date=${date}`
+      ).then((res) => res.json()),
+  });
+
   return (
     <section className="mt-16">
       <p className="text-center text-primary font-bold uppercase">
@@ -31,6 +36,7 @@ const AvailableAppointment = ({ selectedDate, setSelectedDate }) => {
           treatment={treatment}
           setTreatment={setTreatment}
           selectedDate={selectedDate}
+          refetch={refetch}
         ></AppointmentModal>
       )}
     </section>
