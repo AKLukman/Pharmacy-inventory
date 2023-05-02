@@ -21,7 +21,7 @@ const AllUsers = () => {
     fetch(
       `http://localhost:5000/api/v1/pharmacy/doctors-portal-users/admin/${id}`,
       {
-        method: "PUT",
+        method: "PATCH",
         headers: {
           email: user?.email,
         },

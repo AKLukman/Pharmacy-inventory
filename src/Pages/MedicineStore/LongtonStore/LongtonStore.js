@@ -1,14 +1,8 @@
 import React, { useEffect, useState } from "react";
 import ReactPaginate from "react-paginate";
-import "./StokeMedicine.css";
-import StokeMedi from "./StokeMedi";
-const StokeMedicine = () => {
-  // Pagination
-  // count: Loaded
-  // Per page: 10
-  // page: count/per page
-  // current page
+import LongtonMedicine from "./LongtonMedicine";
 
+const LongtonStore = () => {
   const [medicine, setMedicine] = useState([]);
   const [count, setCount] = useState(0);
   const [page, setPage] = useState(0);
@@ -21,7 +15,7 @@ const StokeMedicine = () => {
 
   useEffect(() => {
     fetch(
-      `http://localhost:5000/api/v1/pharmacy/stock-store?search=${saerchByDrugName}&page=${page}&size=${size}`
+      `http://localhost:5000/api/v1/pharmacy/longton-store?search=${saerchByDrugName}&page=${page}&size=${size}`
     )
       .then((res) => res.json())
       .then((data) => {
@@ -46,18 +40,18 @@ const StokeMedicine = () => {
         />
       </div>
       <h2 className="text-center font-bold text-2xl mt-8 uppercase">
-        Stoke Medicine store
+        Longton Medicine store
       </h2>
-      <p className="text-center text-slate-600 font-bold uppercase">
-        ID check required
-      </p>
 
       <h2 className="text-center">
         {medicine.length === 0 && "No Records Found"}
       </h2>
       <div className="grid gap-6 grid-cols-1 md:grid-cols-2 lg:grid-cols-3 mt-10 mb-10">
         {medicine.map((medicine) => (
-          <StokeMedi medicine={medicine} key={medicine._id}></StokeMedi>
+          <LongtonMedicine
+            medicine={medicine}
+            key={medicine._id}
+          ></LongtonMedicine>
         ))}
       </div>
       <div
@@ -101,4 +95,4 @@ const StokeMedicine = () => {
   );
 };
 
-export default StokeMedicine;
+export default LongtonStore;

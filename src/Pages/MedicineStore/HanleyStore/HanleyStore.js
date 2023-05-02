@@ -1,10 +1,8 @@
 import React, { useEffect, useState } from "react";
 import ReactPaginate from "react-paginate";
-import FentonMedicine from "./FentonMedicine";
+import HanleyMedicine from "./HanleyMedicine";
 
-// import "./StokeMedicine.css";
-// import StokeMedi from "./StokeMedi";
-const FentonNotIdCheck = () => {
+const HanleyStore = () => {
   // Pagination
   // count: Loaded
   // Per page: 10
@@ -12,7 +10,6 @@ const FentonNotIdCheck = () => {
   // current page
 
   const [medicine, setMedicine] = useState([]);
-  console.log(medicine);
   const [count, setCount] = useState(0);
   const [page, setPage] = useState(0);
   const [size, setSize] = useState(10);
@@ -24,7 +21,7 @@ const FentonNotIdCheck = () => {
 
   useEffect(() => {
     fetch(
-      `http://localhost:5000/api/v1/pharmacy/fenton-store-id-check-not-required?search=${saerchByDrugName}&page=${page}&size=${size}`
+      `http://localhost:5000/api/v1/pharmacy/hanley-store?search=${saerchByDrugName}&page=${page}&size=${size}`
     )
       .then((res) => res.json())
       .then((data) => {
@@ -49,21 +46,18 @@ const FentonNotIdCheck = () => {
         />
       </div>
       <h2 className="text-center font-bold text-2xl mt-8 uppercase">
-        Fenton Medicine store
+        Hanley Medicine store
       </h2>
-      <p className="text-center text-slate-600 font-bold uppercase">
-        Id check not required
-      </p>
 
       <h2 className="text-center">
         {medicine.length === 0 && "No Records Found"}
       </h2>
       <div className="grid gap-6 grid-cols-1 md:grid-cols-2 lg:grid-cols-3 mt-10 mb-10">
         {medicine.map((medicine) => (
-          <FentonMedicine
+          <HanleyMedicine
             medicine={medicine}
             key={medicine._id}
-          ></FentonMedicine>
+          ></HanleyMedicine>
         ))}
       </div>
       <div
@@ -107,4 +101,4 @@ const FentonNotIdCheck = () => {
   );
 };
 
-export default FentonNotIdCheck;
+export default HanleyStore;

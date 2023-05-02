@@ -1,13 +1,8 @@
 import React, { useEffect, useState } from "react";
 import ReactPaginate from "react-paginate";
-import TunstallMedicine from "../TunstallNotIdCheck/TunstallMedicine";
-const TunstallIdCheck = () => {
-  // Pagination
-  // count: Loaded
-  // Per page: 10
-  // page: count/per page
-  // current page
+import FentonMedicine from "./FentonMedicine";
 
+const FentonStore = () => {
   const [medicine, setMedicine] = useState([]);
   const [count, setCount] = useState(0);
   const [page, setPage] = useState(0);
@@ -20,7 +15,7 @@ const TunstallIdCheck = () => {
 
   useEffect(() => {
     fetch(
-      `http://localhost:5000/api/v1/pharmacy/tunstall-store?search=${saerchByDrugName}&page=${page}&size=${size}`
+      `http://localhost:5000/api/v1/pharmacy/fenton-store?search=${saerchByDrugName}&page=${page}&size=${size}`
     )
       .then((res) => res.json())
       .then((data) => {
@@ -45,21 +40,18 @@ const TunstallIdCheck = () => {
         />
       </div>
       <h2 className="text-center font-bold text-2xl mt-8 uppercase">
-        Tunstall Medicine store
+        Fenton Medicine store
       </h2>
-      <p className="text-center text-slate-600 font-bold uppercase">
-        ID check required
-      </p>
 
       <h2 className="text-center">
         {medicine.length === 0 && "No Records Found"}
       </h2>
       <div className="grid gap-6 grid-cols-1 md:grid-cols-2 lg:grid-cols-3 mt-10 mb-10">
         {medicine.map((medicine) => (
-          <TunstallMedicine
+          <FentonMedicine
             medicine={medicine}
             key={medicine._id}
-          ></TunstallMedicine>
+          ></FentonMedicine>
         ))}
       </div>
       <div
@@ -103,4 +95,4 @@ const TunstallIdCheck = () => {
   );
 };
 
-export default TunstallIdCheck;
+export default FentonStore;

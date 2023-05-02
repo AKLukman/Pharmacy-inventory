@@ -23,16 +23,41 @@ const Navbar = () => {
       </li> */}
       {isAdmin && (
         <>
-          <li>
-            <Link to="/medicine">Medicine Store</Link>
-          </li>
+          <div className="dropdown dropdown-hover mt-3 ">
+            <label
+              tabIndex={0}
+              className="bg-blue-500 text-white font-bold py-2 px-4 rounded cursor:ponter"
+            >
+              Medicine Store
+            </label>
+            <ul
+              tabIndex={0}
+              className="dropdown-content  menu p-2 shadow bg-base-100 rounded-box w-52"
+            >
+              <li>
+                <Link to={"/stoke-store"}>Stoke store</Link>
+              </li>
+              <li>
+                <Link to={"/tunstall-store"}>Tunstall store</Link>
+              </li>
+              <li>
+                <Link to={"/fenton-store"}>Fenton store</Link>
+              </li>
+              <li>
+                <Link to={"/hanley-store"}>Hanley Store</Link>
+              </li>
+              <li>
+                <Link to={"/longton-store"}>Longton Store</Link>
+              </li>
+            </ul>
+          </div>
         </>
       )}
-      <li>
-        <Link to="/appointment">Appointment</Link>
-      </li>
       {user?.uid ? (
         <>
+          <li>
+            <Link to="/appointment">Appointment</Link>
+          </li>
           <li>
             <Link to="/dashboard">Dashboard</Link>
           </li>

@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from "react";
 import ReactPaginate from "react-paginate";
-import StokeMedi from "../StokeMedicine/StokeMedi";
+import TunstallMedicine from "./TunstallMedicine";
+
 // import "./StokeMedicine.css";
 // import StokeMedi from "./StokeMedi";
-const StokNotIdCheck = () => {
+const TunstallStore = () => {
   // Pagination
   // count: Loaded
   // Per page: 10
@@ -11,6 +12,7 @@ const StokNotIdCheck = () => {
   // current page
 
   const [medicine, setMedicine] = useState([]);
+  console.log(medicine);
   const [count, setCount] = useState(0);
   const [page, setPage] = useState(0);
   const [size, setSize] = useState(10);
@@ -22,7 +24,7 @@ const StokNotIdCheck = () => {
 
   useEffect(() => {
     fetch(
-      `http://localhost:5000/api/v1/pharmacy/stock-store-id-check-not-required?search=${saerchByDrugName}&page=${page}&size=${size}`
+      `http://localhost:5000/api/v1/pharmacy/tunstall-store?search=${saerchByDrugName}&page=${page}&size=${size}`
     )
       .then((res) => res.json())
       .then((data) => {
@@ -41,24 +43,24 @@ const StokNotIdCheck = () => {
       <div className="text-center mt-11">
         <input
           type="text"
-          placeholder="Search by medicine name"
+          placeholder="Search by medicine name or condition"
           className="input input-bordered input-info w-full max-w-xs"
           onChange={(e) => setSearch(e.target.value)}
         />
       </div>
       <h2 className="text-center font-bold text-2xl mt-8 uppercase">
-        Stoke Medicine store
+        Tunstall Medicine store
       </h2>
-      <p className="text-center text-slate-600 font-bold uppercase">
-        Id check not required
-      </p>
 
       <h2 className="text-center">
         {medicine.length === 0 && "No Records Found"}
       </h2>
       <div className="grid gap-6 grid-cols-1 md:grid-cols-2 lg:grid-cols-3 mt-10 mb-10">
         {medicine.map((medicine) => (
-          <StokeMedi medicine={medicine} key={medicine._id}></StokeMedi>
+          <TunstallMedicine
+            medicine={medicine}
+            key={medicine._id}
+          ></TunstallMedicine>
         ))}
       </div>
       <div
@@ -102,4 +104,4 @@ const StokNotIdCheck = () => {
   );
 };
 
-export default StokNotIdCheck;
+export default TunstallStore;

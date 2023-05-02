@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from "react";
 import ReactPaginate from "react-paginate";
-import TunstallMedicine from "./TunstallMedicine";
+import StokeMedicine from "./StokeMedicine";
+// import StokeMedi from "../../Medicine/Stores/Stoke/StokeMedicine/StokeMedi";
+// import StokeMedi from "../StokeMedicine/StokeMedi";
 // import "./StokeMedicine.css";
 // import StokeMedi from "./StokeMedi";
-const TunstallNotIdCheck = () => {
+const StokeStore = () => {
   // Pagination
   // count: Loaded
   // Per page: 10
@@ -11,7 +13,6 @@ const TunstallNotIdCheck = () => {
   // current page
 
   const [medicine, setMedicine] = useState([]);
-  console.log(medicine);
   const [count, setCount] = useState(0);
   const [page, setPage] = useState(0);
   const [size, setSize] = useState(10);
@@ -23,7 +24,7 @@ const TunstallNotIdCheck = () => {
 
   useEffect(() => {
     fetch(
-      `http://localhost:5000/api/v1/pharmacy/tunstall-store-id-check-not-required?search=${saerchByDrugName}&page=${page}&size=${size}`
+      `http://localhost:5000/api/v1/pharmacy/stock-store-id-check-not-required?search=${saerchByDrugName}&page=${page}&size=${size}`
     )
       .then((res) => res.json())
       .then((data) => {
@@ -48,21 +49,15 @@ const TunstallNotIdCheck = () => {
         />
       </div>
       <h2 className="text-center font-bold text-2xl mt-8 uppercase">
-        Tunstall Medicine store
+        Stoke Medicine store
       </h2>
-      <p className="text-center text-slate-600 font-bold uppercase">
-        Id check not required
-      </p>
 
       <h2 className="text-center">
         {medicine.length === 0 && "No Records Found"}
       </h2>
       <div className="grid gap-6 grid-cols-1 md:grid-cols-2 lg:grid-cols-3 mt-10 mb-10">
         {medicine.map((medicine) => (
-          <TunstallMedicine
-            medicine={medicine}
-            key={medicine._id}
-          ></TunstallMedicine>
+          <StokeMedicine medicine={medicine} key={medicine._id}></StokeMedicine>
         ))}
       </div>
       <div
@@ -106,4 +101,4 @@ const TunstallNotIdCheck = () => {
   );
 };
 
-export default TunstallNotIdCheck;
+export default StokeStore;

@@ -1,19 +1,14 @@
 import React from "react";
 import { toast } from "react-hot-toast";
+import { Link } from "react-router-dom";
 
-const FentonMedicine = ({ medicine }) => {
-  const { drugName, condition, availabilityStoke, idCheck, stock, _id } =
+const HanleyMedicine = ({ medicine }) => {
+  const { drugName, condition, availabilityHanley, idCheck, stock, _id } =
     medicine;
 
-  const handleUpdateQuantity = (event) => {
-    fetch(`http://localhost:5000/api/v1/pharmacy/allmedicine/${_id}`, {
-      method: "PATCH",
-    })
-      .then((res) => res.json())
-      .then((data) => console.log(data));
-
+  const handleStock = () => {
     if (stock < 10) {
-      toast("Stock less than 10!", {
+      toast.error("Stock less than 10!", {
         style: {
           backgroundColor: "white",
           color: "red",
@@ -22,6 +17,7 @@ const FentonMedicine = ({ medicine }) => {
       });
     }
   };
+
   return (
     <div className="card w-96 bg-base-100 shadow-xl">
       <div className="card-body">
@@ -36,24 +32,24 @@ const FentonMedicine = ({ medicine }) => {
           {idCheck}
         </p>
         <p>
-          <span className="font-bold ">Quantity: </span>
+          <span className="font-bold ">Stock: </span>
           {stock}
         </p>
         <p>
-          <span className="font-bold ">Availability in Fenton store: </span>
-          {availabilityStoke}
+          <span className="font-bold ">Availability in Hanley store: </span>
+          {availabilityHanley}
         </p>
         <div className="card-actions justify-end">
-          <button
-            onClick={() => handleUpdateQuantity()}
-            className="btn btn-primary"
-          >
-            Buy Now
-          </button>
+          <Link to={`/hanley-store/${_id}`}>
+            {" "}
+            <button onClick={() => handleStock()} className="btn btn-primary">
+              Sell Now
+            </button>
+          </Link>
         </div>
       </div>
     </div>
   );
 };
 
-export default FentonMedicine;
+export default HanleyMedicine;
