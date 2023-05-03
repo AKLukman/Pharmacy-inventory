@@ -9,7 +9,7 @@ const AllUsers = () => {
     queryKey: ["doctors-portal-users"],
     queryFn: async () => {
       const res = await fetch(
-        "http://localhost:5000/api/v1/pharmacy/doctors-portal-users"
+        "https://pharmacy-inventory.vercel.app/api/v1/pharmacy/doctors-portal-users"
       );
       const data = res.json();
       return data;
@@ -19,7 +19,7 @@ const AllUsers = () => {
   console.log(user.email);
   const hanndleMakeAdmin = (id) => {
     fetch(
-      `http://localhost:5000/api/v1/pharmacy/doctors-portal-users/admin/${id}`,
+      `https://pharmacy-inventory.vercel.app/api/v1/pharmacy/doctors-portal-users/admin/${id}`,
       {
         method: "PATCH",
         headers: {

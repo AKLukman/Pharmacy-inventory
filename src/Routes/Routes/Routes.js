@@ -62,7 +62,7 @@ export const router = createBrowserRouter([
         element: <StokeMedicineDetails></StokeMedicineDetails>,
         loader: ({ params }) =>
           fetch(
-            `http://localhost:5000/api/v1/pharmacy/stock-store-id-check-not-required/${params.id}`
+            `https://pharmacy-inventory.vercel.app/api/v1/pharmacy/stock-store-id-check-not-required/${params.id}`
           ),
       },
 
@@ -76,7 +76,7 @@ export const router = createBrowserRouter([
         element: <TunstallMedicineDetails></TunstallMedicineDetails>,
         loader: ({ params }) =>
           fetch(
-            `http://localhost:5000/api/v1/pharmacy/tunstall-store/${params.id}`
+            `https://pharmacy-inventory.vercel.app/api/v1/pharmacy/tunstall-store/${params.id}`
           ),
       },
 
@@ -90,7 +90,7 @@ export const router = createBrowserRouter([
         element: <FentonMedicineDetails></FentonMedicineDetails>,
         loader: ({ params }) =>
           fetch(
-            `http://localhost:5000/api/v1/pharmacy/fenton-store/${params.id}`
+            `https://pharmacy-inventory.vercel.app/api/v1/pharmacy/fenton-store/${params.id}`
           ),
       },
 
@@ -104,7 +104,7 @@ export const router = createBrowserRouter([
         element: <HanleyMedicineDetails></HanleyMedicineDetails>,
         loader: ({ params }) =>
           fetch(
-            `http://localhost:5000/api/v1/pharmacy/hanley-store/${params.id}`
+            `https://pharmacy-inventory.vercel.app/api/v1/pharmacy/hanley-store/${params.id}`
           ),
       },
       // Longton store
@@ -117,7 +117,7 @@ export const router = createBrowserRouter([
         element: <LongtonMedicineDetails></LongtonMedicineDetails>,
         loader: ({ params }) =>
           fetch(
-            `http://localhost:5000/api/v1/pharmacy/longton-store/${params.id}`
+            `https://pharmacy-inventory.vercel.app/api/v1/pharmacy/longton-store/${params.id}`
           ),
       },
 

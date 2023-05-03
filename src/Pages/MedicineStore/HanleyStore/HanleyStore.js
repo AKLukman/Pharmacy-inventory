@@ -21,7 +21,7 @@ const HanleyStore = () => {
 
   useEffect(() => {
     fetch(
-      `http://localhost:5000/api/v1/pharmacy/hanley-store?search=${saerchByDrugName}&page=${page}&size=${size}`
+      `https://pharmacy-inventory.vercel.app/api/v1/pharmacy/hanley-store?search=${saerchByDrugName}&page=${page}&size=${size}`
     )
       .then((res) => res.json())
       .then((data) => {

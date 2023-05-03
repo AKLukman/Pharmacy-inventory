@@ -13,7 +13,7 @@ const AvailableAppointment = ({ selectedDate, setSelectedDate }) => {
     queryKey: ["appointmentOptions", date],
     queryFn: () =>
       fetch(
-        `http://localhost:5000/api/v1/pharmacy/appointmentOptions?date=${date}`
+        `https://pharmacy-inventory.vercel.app/api/v1/pharmacy/appointmentOptions?date=${date}`
       ).then((res) => res.json()),
   });
 

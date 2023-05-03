@@ -20,7 +20,9 @@ const ManageDoctors = () => {
   } = useQuery({
     queryKey: ["doctors"],
     queryFn: async () => {
-      const res = await fetch("http://localhost:5000/api/v1/pharmacy/doctors");
+      const res = await fetch(
+        "https://pharmacy-inventory.vercel.app/api/v1/pharmacy/doctors"
+      );
       const data = res.json();
       return data;
     },
@@ -28,9 +30,12 @@ const ManageDoctors = () => {
 
   const handleDeleteDoctor = (doctor) => {
     console.log(doctor);
-    fetch(`http://localhost:5000/api/v1/pharmacy/doctors/${doctor._id}`, {
-      method: "DELETE",
-    })
+    fetch(
+      `https://pharmacy-inventory.vercel.app/api/v1/pharmacy/doctors/${doctor._id}`,
+      {
+        method: "DELETE",
+      }
+    )
       .then((res) => res.json())
       .then((data) => {
         console.log(data);

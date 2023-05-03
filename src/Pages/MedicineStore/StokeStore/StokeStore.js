@@ -24,7 +24,7 @@ const StokeStore = () => {
 
   useEffect(() => {
     fetch(
-      `http://localhost:5000/api/v1/pharmacy/stock-store-id-check-not-required?search=${saerchByDrugName}&page=${page}&size=${size}`
+      `https://pharmacy-inventory.vercel.app/api/v1/pharmacy/stock-store-id-check-not-required?search=${saerchByDrugName}&page=${page}&size=${size}`
     )
       .then((res) => res.json())
       .then((data) => {

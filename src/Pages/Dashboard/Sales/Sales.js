@@ -2,7 +2,7 @@ import React from "react";
 import { useQuery } from "react-query";
 
 const Sales = () => {
-  const url = `http://localhost:5000/api/v1/pharmacy/sales`;
+  const url = `https://pharmacy-inventory.vercel.app/api/v1/pharmacy/sales`;
 
   const { data: allSales = [] } = useQuery({
     queryKey: ["sales"],

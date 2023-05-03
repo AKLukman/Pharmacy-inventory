@@ -19,7 +19,7 @@ const LongtonMedicineDetails = () => {
     queryKey: [`longton-store`],
     queryFn: async () => {
       const res = await fetch(
-        `http://localhost:5000/api/v1/pharmacy/longton-store/${medicineId._id}`
+        `https://pharmacy-inventory.vercel.app/api/v1/pharmacy/longton-store/${medicineId._id}`
       );
       const data = await res.json();
       return data;
@@ -28,7 +28,7 @@ const LongtonMedicineDetails = () => {
   const handleUpdateQuantity = (event) => {
     if (medicine.stock > 0) {
       fetch(
-        `http://localhost:5000/api/v1/pharmacy/allmedicine/${medicineId._id}`,
+        `https://pharmacy-inventory.vercel.app/api/v1/pharmacy/allmedicine/${medicineId._id}`,
         {
           method: "PATCH",
           headers: {
@@ -59,7 +59,7 @@ const LongtonMedicineDetails = () => {
               hour12: true,
             }),
           };
-          fetch(`http://localhost:5000/api/v1/pharmacy/sales`, {
+          fetch(`https://pharmacy-inventory.vercel.app/api/v1/pharmacy/sales`, {
             method: "POST",
             headers: {
               "content-type": "application/json",
@@ -177,12 +177,16 @@ const LongtonMedicineDetails = () => {
   const [store, setStore] = useState("");
   console.log("input date: ", dateOfBirth);
   useEffect(() => {
-    fetch(`http://localhost:5000/api/v1/pharmacy/user/${dateOfBirth}`)
+    fetch(
+      `https://pharmacy-inventory.vercel.app/api/v1/pharmacy/user/${dateOfBirth}`
+    )
       .then((res) => res.json())
       .then((data) => setUser(data));
   }, [dateOfBirth]);
   useEffect(() => {
-    fetch(`http://localhost:5000/api/v1/pharmacy/users/${dateOfBirth}`)
+    fetch(
+      `https://pharmacy-inventory.vercel.app/api/v1/pharmacy/users/${dateOfBirth}`
+    )
       .then((res) => res.json())
       .then((data) => setUsers(data));
   }, [dateOfBirth]);

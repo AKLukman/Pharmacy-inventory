@@ -7,9 +7,12 @@ const Medi = ({ medicine }) => {
     medicine;
 
   const handleUpdateQuantity = (event) => {
-    fetch(`http://localhost:5000/api/v1/pharmacy/allmedicine/${_id}`, {
-      method: "PATCH",
-    })
+    fetch(
+      `https://pharmacy-inventory.vercel.app/api/v1/pharmacy/allmedicine/${_id}`,
+      {
+        method: "PATCH",
+      }
+    )
       .then((res) => res.json())
       .then((data) => console.log(data));
 
