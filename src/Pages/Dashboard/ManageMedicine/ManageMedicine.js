@@ -4,41 +4,43 @@ import Loading from "../../Shared/Loading/Loading";
 import { useState } from "react";
 import ConfiramationModal from "../../Shared/ConfiramationModal/ConfiramationModal";
 import { toast } from "react-hot-toast";
-import { daysInWeek } from "date-fns/constants";
 
-const ManageDoctors = () => {
-  const [deletingDoctor, setDeletingDoctor] = useState(null);
+const ManageMedicine = () => {
+  const [deletingMedicine, setDeletingMedicine] = useState(null);
 
   const closeModal = () => {
-    setDeletingDoctor(null);
+    setDeletingMedicine(null);
   };
 
   const {
-    data: doctors = [],
+    data: allmedicine = [],
     isLoading,
+
     refetch,
   } = useQuery({
-    queryKey: ["doctors"],
+    queryKey: ["pharmacy-medicine"],
     queryFn: async () => {
-      const res = await fetch("http://localhost:5000/api/v1/pharmacy/doctors");
+      const res = await fetch(
+        "http://localhost:5000/api/v1/pharmacy/pharmacy-medicine"
+      );
       const data = res.json();
       return data;
     },
   });
+  console.log(allmedicine);
 
-  const handleDeleteDoctor = (doctor) => {
-    console.log(doctor);
-    fetch(`http://localhost:5000/api/v1/pharmacy/doctors/${doctor._id}`, {
-      method: "DELETE",
-    })
+  const handleDeleMedicine = (medicine) => {
+    fetch(
+      `http://localhost:5000/api/v1/pharmacy/pharmacy-medicine/${medicine._id}`,
+      {
+        method: "DELETE",
+      }
+    )
       .then((res) => res.json())
       .then((data) => {
-        console.log(data);
-        // toast.success("Doctor deleted successfully!");
-
         if (data.deletedCount > 0) {
           refetch();
-          toast.success(`Doctor ${doctor.name} deleted successfully`);
+          toast.success(`${medicine.drugName} deleted successfully`);
         }
       });
   };
@@ -47,6 +49,13 @@ const ManageDoctors = () => {
   }
   return (
     <div>
+      <h3 className="text-xl mb-5 font-bold uppercase">Manage Medicine</h3>
+      <p className="mb-1">
+        <span className="text-white font-bold bg-cyan-500 p-0.5">
+          Total Stock: {allmedicine.length}
+        </span>
+      </p>
+
       <div className="overflow-x-auto w-full">
         <table className="table w-full">
           {/* head */}
@@ -54,43 +63,44 @@ const ManageDoctors = () => {
             <tr>
               <th></th>
               <th>Name</th>
-              <th>Email</th>
-              <th>Specialty</th>
-              <th>Action</th>
+              <th>Stock</th>
+              <th>Price</th>
+              <th>update</th>
+              <th>delete</th>
             </tr>
           </thead>
           <tbody>
             {/* row 1 */}
-            {doctors.map((doctor, i) => (
+            {allmedicine.map((medicine, i) => (
               <tr>
                 <th>{i + 1}</th>
                 <td>
                   <div className="flex items-center space-x-3">
-                    <div className="avatar">
-                      <div className="mask mask-squircle w-12 h-12">
-                        <img
-                          src={doctor?.image}
-                          alt="Avatar Tailwind CSS Component"
-                        />
-                      </div>
-                    </div>
                     <div>
-                      <div className="font-bold">{doctor.name}</div>
+                      <div className="font-bold">{medicine.drugName}</div>
                       {/* <div className="text-sm opacity-50">United States</div> */}
                     </div>
                   </div>
                 </td>
                 <td>
-                  <span className="">{doctor.email}</span>
+                  <span className="">{medicine.stock}</span>
                 </td>
+
                 <td>
-                  <span className="badge badge-ghost badge-lg">
-                    {doctor.specialty}
-                  </span>
+                  <span className="">£{medicine.price}</span>
                 </td>
                 <th>
                   <label
-                    onClick={() => setDeletingDoctor(doctor)}
+                    htmlFor="confirmation-modal"
+                    className="btn btn-ghost btn-xs"
+                  >
+                    update
+                  </label>
+                </th>
+
+                <th>
+                  <label
+                    onClick={() => setDeletingMedicine(medicine)}
                     htmlFor="confirmation-modal"
                     className="btn btn-ghost btn-xs"
                   >
@@ -102,18 +112,18 @@ const ManageDoctors = () => {
           </tbody>
         </table>
       </div>
-      {deletingDoctor && (
+      {deletingMedicine && (
         <ConfiramationModal
           title={`Are you sure want to delete?`}
-          message={`If you delete ${deletingDoctor.name}. It can not be undone!`}
+          message={`If you delete ${deletingMedicine.drugName}. It can not be undone!`}
           closeModal={closeModal}
-          successAction={handleDeleteDoctor}
+          successAction={handleDeleMedicine}
           actionName="Delete"
-          modalData={deletingDoctor}
+          modalData={deletingMedicine}
         ></ConfiramationModal>
       )}
     </div>
   );
 };
 
-export default ManageDoctors;
+export default ManageMedicine;

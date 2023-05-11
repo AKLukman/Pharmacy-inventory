@@ -3,8 +3,15 @@ import { toast } from "react-hot-toast";
 import { Link } from "react-router-dom";
 
 const HanleyMedicine = ({ medicine }) => {
-  const { drugName, condition, availabilityHanley, idCheck, stock, _id } =
-    medicine;
+  const {
+    drugName,
+    condition,
+    availabilityHanley,
+    idCheck,
+    stock,
+    price,
+    _id,
+  } = medicine;
 
   const handleStock = () => {
     if (stock < 10) {
@@ -34,6 +41,9 @@ const HanleyMedicine = ({ medicine }) => {
         <p>
           <span className="font-bold ">Stock: </span>
           {stock}
+        </p>
+        <p>
+          <span className="font-bold ">Price: </span>£{price}
         </p>
         <p>
           <span className="font-bold ">Availability in Hanley store: </span>

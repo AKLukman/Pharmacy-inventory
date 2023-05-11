@@ -4,10 +4,12 @@ import { Link, Outlet } from "react-router-dom";
 import { useContext } from "react";
 import { AuthContext } from "../context/AuthProvider";
 import useAdmin from "../hooks/useAdmin";
+import useSutff from "../hooks/useStuff";
 
 const DashboardLayout = () => {
   const { user } = useContext(AuthContext);
   const [isAdmin] = useAdmin(user?.email);
+  const [isStuff] = useSutff(user?.email);
 
   return (
     <div>
@@ -37,6 +39,40 @@ const DashboardLayout = () => {
                 </li>
                 <li>
                   <Link to="/dashboard/manage-doctors">Manage doctors</Link>
+                </li>
+                <li>
+                  <Link to="/dashboard/manage-user">Manage User</Link>
+                </li>
+                <li>
+                  <Link to="/dashboard/all-medicine">All Medicine</Link>
+                </li>
+              </>
+            )}
+            {isStuff && (
+              <>
+                {" "}
+                <li>
+                  <Link to="/dashboard/sales">All Sales</Link>
+                </li>
+                <li>
+                  <Link to="/dashboard/allusers">All Users</Link>
+                </li>
+                <li>
+                  <Link to="/dashboard/add-doctor">Add doctor</Link>
+                </li>
+                <li>
+                  <Link to="/dashboard/manage-doctors">Manage doctors</Link>
+                </li>
+                <li>
+                  <Link to="/dashboard/pharmacy-user-registation">
+                    Add User
+                  </Link>
+                </li>
+                <li>
+                  <Link to="/dashboard/manage-user">Manage User</Link>
+                </li>
+                <li>
+                  <Link to="/dashboard/all-medicine">Manage Medicine</Link>
                 </li>
               </>
             )}

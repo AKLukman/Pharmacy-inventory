@@ -22,7 +22,7 @@ const AllMedicine = () => {
 
   useEffect(() => {
     fetch(
-      `https://pharmacy-inventory.vercel.app/api/v1/pharmacy/allmedicine?search=${saerchByDrugName}&page=${page}&size=${size}&stock=${stock}`
+      `http://localhost:5000/api/v1/pharmacy/allmedicine?search=${saerchByDrugName}&page=${page}&size=${size}&stock=${stock}`
     )
       .then((res) => res.json())
       .then((data) => {

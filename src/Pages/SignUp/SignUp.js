@@ -39,16 +39,13 @@ const SignUp = () => {
 
   const saveUser = (name, email) => {
     const user = { name, email };
-    fetch(
-      "https://pharmacy-inventory.vercel.app/api/v1/pharmacy/doctors-portal-users",
-      {
-        method: "POST",
-        headers: {
-          "content-type": "application/json",
-        },
-        body: JSON.stringify(user),
-      }
-    )
+    fetch("http://localhost:5000/api/v1/pharmacy/doctors-portal-users", {
+      method: "POST",
+      headers: {
+        "content-type": "application/json",
+      },
+      body: JSON.stringify(user),
+    })
       .then((res) => res, json())
       .then((data) => {
         getUserToken(email);
@@ -56,9 +53,7 @@ const SignUp = () => {
   };
 
   const getUserToken = (email) => {
-    fetch(
-      `https://pharmacy-inventory.vercel.app/api/v1/pharmacy/jwt?email=${email}`
-    )
+    fetch(`http://localhost:5000/api/v1/pharmacy/jwt?email=${email}`)
       .then((res) => res.json())
       .then((data) => {
         if (data.accessToken) {

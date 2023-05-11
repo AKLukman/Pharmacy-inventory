@@ -19,7 +19,7 @@ const HanleyMedicineDetails = () => {
     queryKey: [`hanley-store`],
     queryFn: async () => {
       const res = await fetch(
-        `https://pharmacy-inventory.vercel.app/api/v1/pharmacy/hanley-store/${medicineId._id}`
+        `http://localhost:5000/api/v1/pharmacy/hanley-store/${medicineId._id}`
       );
       const data = await res.json();
       return data;
@@ -28,7 +28,7 @@ const HanleyMedicineDetails = () => {
   const handleUpdateQuantity = (event) => {
     if (medicine.stock > 0) {
       fetch(
-        `https://pharmacy-inventory.vercel.app/api/v1/pharmacy/allmedicine/${medicineId._id}`,
+        `http://localhost:5000/api/v1/pharmacy/allmedicine/${medicineId._id}`,
         {
           method: "PATCH",
           headers: {
@@ -59,7 +59,7 @@ const HanleyMedicineDetails = () => {
               hour12: true,
             }),
           };
-          fetch(`https://pharmacy-inventory.vercel.app/api/v1/pharmacy/sales`, {
+          fetch(`http://localhost:5000/api/v1/pharmacy/sales`, {
             method: "POST",
             headers: {
               "content-type": "application/json",
@@ -92,9 +92,7 @@ const HanleyMedicineDetails = () => {
             <h1 class="text-lg font-semibold text-center">
               PharmaZeal SALE INVOICE
             </h1>
-            <p class="text-sm text-center mt-2">
-              Stoke-on-Trent Staffordshire ST4 2DE
-            </p>
+            <p class="text-sm text-center mt-2">Hanley Store</p>
           </div>
           <div class="border-b-2 py-4 mb-8">
             <h2 class="text-lg font-semibold">Customer Details:</h2>
@@ -124,6 +122,7 @@ const HanleyMedicineDetails = () => {
               <thead class="text-sm font-medium">
                 <tr>
                   <th class="text-left">Medicine</th>
+                  <th class="text-left">Condition</th>
                   <th class="text-right">Price</th>
                   <th class="text-right">Quantity</th>
                   <th class="text-right">Total</th>
@@ -132,14 +131,15 @@ const HanleyMedicineDetails = () => {
               <tbody>
                 <tr>
                   <td class="text-sm">{medicine.drugName}</td>
-                  <td class="text-right">$19.99</td>
-                  <td class="text-right">2</td>
-                  <td class="text-right">$39.98</td>
+                  <td class="text-sm">{medicine.condition}</td>
+                  <td class="text-right">£{medicine.price}</td>
+                  <td class="text-right">{quantity}</td>
+                  <td class="text-right">£{quantity * medicine.price}</td>
                 </tr>
               </tbody>
             </table>
           </div>
-          <div class="border-b-2 py-4 mb-8">
+          {/* <div class="border-b-2 py-4 mb-8">
             <div class="flex justify-between">
               <p class="text-sm font-medium">Subtotal:</p>
               <p class="text-lg font-semibold">$179.94</p>
@@ -148,7 +148,7 @@ const HanleyMedicineDetails = () => {
               <p class="text-sm font-medium">Tax:</p>
               <p class="text-lg font-semibold">$17.99</p>
             </div>
-          </div>
+          </div> */}
         </div>
       </div>
     );
@@ -179,15 +179,13 @@ const HanleyMedicineDetails = () => {
   const storeName = "hanley";
   useEffect(() => {
     fetch(
-      `https://pharmacy-inventory.vercel.app/api/v1/pharmacy/userHanley/${dateOfBirth}/${storeName}`
+      `http://localhost:5000/api/v1/pharmacy/userHanley/${dateOfBirth}/${storeName}`
     )
       .then((res) => res.json())
       .then((data) => setUser(data));
   }, [dateOfBirth]);
   useEffect(() => {
-    fetch(
-      `https://pharmacy-inventory.vercel.app/api/v1/pharmacy/users/${dateOfBirth}`
-    )
+    fetch(`http://localhost:5000/api/v1/pharmacy/users/${dateOfBirth}`)
       .then((res) => res.json())
       .then((data) => setUsers(data));
   }, [dateOfBirth]);
@@ -258,7 +256,7 @@ const HanleyMedicineDetails = () => {
       {" "}
       <h2 className="text-4xl m-10 text-center font-bold">Medicine Details</h2>
       <div class="flex items-center justify-between mb-4">
-        <h2 class="text-4xl font-bold uppercase">{medicine.drugName}</h2>
+        <h2 class="text-xl font-bold uppercase">{medicine.drugName}</h2>
       </div>
       <div class="flex flex-col sm:flex-row sm:items-center mb-4">
         <div class="flex items-center mb-2 sm:mb-0 sm:mr-4">
@@ -297,6 +295,10 @@ const HanleyMedicineDetails = () => {
         <p>
           ID Check Required:
           <span className="font-bold"> {medicine.idCheck}</span>
+        </p>
+        <p>
+          Price:
+          <span className="font-bold"> £{medicine.price}</span>
         </p>
         <p>
           Availability in stoke store:

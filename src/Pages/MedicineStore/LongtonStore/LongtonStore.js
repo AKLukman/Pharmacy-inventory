@@ -15,7 +15,7 @@ const LongtonStore = () => {
 
   useEffect(() => {
     fetch(
-      `https://pharmacy-inventory.vercel.app/api/v1/pharmacy/longton-store?search=${saerchByDrugName}&page=${page}&size=${size}`
+      `http://localhost:5000/api/v1/pharmacy/longton-store?search=${saerchByDrugName}&page=${page}&size=${size}`
     )
       .then((res) => res.json())
       .then((data) => {

@@ -3,7 +3,7 @@ import { toast } from "react-hot-toast";
 import { Link } from "react-router-dom";
 
 const StokeMedicine = ({ medicine }) => {
-  const { drugName, condition, availabilityStoke, idCheck, stock, _id } =
+  const { drugName, condition, availabilityStoke, idCheck, stock, price, _id } =
     medicine;
 
   const handleStock = () => {
@@ -34,6 +34,9 @@ const StokeMedicine = ({ medicine }) => {
         <p>
           <span className="font-bold ">Stock: </span>
           {stock}
+        </p>
+        <p>
+          <span className="font-bold ">Price: </span>£{price}
         </p>
         <p>
           <span className="font-bold ">availability in Stoke store: </span>

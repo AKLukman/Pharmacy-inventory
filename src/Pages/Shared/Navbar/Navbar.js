@@ -2,15 +2,22 @@ import React, { useContext } from "react";
 import { Link } from "react-router-dom";
 import { AuthContext } from "../../../context/AuthProvider";
 import useAdmin from "../../../hooks/useAdmin";
+import { reload } from "firebase/auth";
+import useSutff from "../../../hooks/useStuff";
 
 const Navbar = () => {
   const { user, logOut } = useContext(AuthContext);
 
   const [isAdmin] = useAdmin(user?.email);
+  const [isStuff] = useSutff(user?.email);
   const handleLogOut = () => {
     logOut()
-      .then(() => {})
-      .catch((err) => console.log(err.message));
+      .then(() => {
+        window.reload();
+      })
+      .catch((err) => {
+        console.log(err.message);
+      });
   };
   const menuItems = (
     <>
@@ -18,10 +25,12 @@ const Navbar = () => {
       <li>
         <Link to="/">Home</Link>
       </li>
-      {/* <li>
-        <Link to="/about">About</Link>
-      </li> */}
-      {isAdmin && (
+      {/* {isAdmin && (
+        <li>
+          <Link to="/about">About</Link>
+        </li>
+      )} */}
+      {user?.uid && (isStuff || isAdmin) ? (
         <>
           <div className="dropdown dropdown-hover mt-3 ">
             <label
@@ -52,6 +61,8 @@ const Navbar = () => {
             </ul>
           </div>
         </>
+      ) : (
+        ""
       )}
       {user?.uid ? (
         <>

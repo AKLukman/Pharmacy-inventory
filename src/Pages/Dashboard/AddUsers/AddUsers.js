@@ -10,124 +10,117 @@ const AddUsers = () => {
     formState: { errors },
     handleSubmit,
   } = useForm();
-  const imageHostingKey = process.env.REACT_APP_Imagebb_Key;
+
+  const stores = ["stoke", "hanley", "fenton", "tunstall", "longton"];
+
   const navigate = useNavigate();
 
-  const { data: specialties = [], isLoading } = useQuery({
-    queryKey: ["doctor-specialty"],
-    queryFn: async () => {
-      const res = await fetch(
-        "https://pharmacy-inventory.vercel.app/api/v1/pharmacy/doctor-specialty"
-      );
-      const data = await res.json();
-      return data;
-    },
-  });
-  const handleAddDoctor = (data) => {
-    const image = data.img[0];
-    const formData = new FormData();
-    formData.append("image", image);
-    const url = `https://api.imgbb.com/1/upload?key=${imageHostingKey}`;
-    fetch(url, {
+  const handleAddUser = (data) => {
+    const user = {
+      dob: data.dob,
+      firstName: data.firstName,
+      surname: data.surname,
+      city: data.city,
+      store: data.store,
+    };
+    //   post a user
+    fetch(`http://localhost:5000/api/v1/pharmacy//pharmacy-user`, {
       method: "POST",
-      body: formData,
+      headers: {
+        "content-type": "application/json",
+      },
+      body: JSON.stringify(user),
     })
       .then((res) => res.json())
-      .then((imageData) => {
-        console.log(imageData);
-        if (imageData.success) {
-          console.log(imageData.data.url);
-          const doctor = {
-            name: data.name,
-            email: data.email,
-            specialty: data.specialty,
-            image: imageData.data.url,
-          };
-          //   post a doctor
-          fetch(
-            `https://pharmacy-inventory.vercel.app/api/v1/pharmacy/doctors`,
-            {
-              method: "POST",
-              headers: {
-                "content-type": "application/json",
-              },
-              body: JSON.stringify(doctor),
-            }
-          )
-            .then((res) => res.json())
-            .then((data) => {
-              console.log(data);
-              toast.success(`Doctor added successfully`);
-              navigate("/dashboard/manage-doctors");
-            });
-        }
+      .then((data) => {
+        console.log(data);
+        toast.success(`Pharmacy user added successfully`);
+        navigate("/dashboard/manage-user");
       });
   };
+
   return (
     <div className="w-96 p-7">
-      <h2 className="text-4xl">Add a Users</h2>
-      <form onSubmit={handleSubmit(handleAddDoctor)}>
+      <h2 className="text-4xl">Add a User</h2>
+      <form onSubmit={handleSubmit(handleAddUser)}>
         <div className="form-control w-full max-w-xs">
           <label className="label">
-            <span className="label-text font-semibold">Name</span>
+            <span className="label-text font-semibold">Date of Birth</span>
           </label>
           <input
-            {...register("name", { required: "Name is required" })}
+            {...register("dob", { required: "Name is required" })}
+            type="date"
+            placeholder="Type here"
+            className="input input-bordered w-full max-w-lg"
+          />
+          {errors.dob && (
+            <p className="text-red-600" role="alert">
+              {errors.dob?.message}
+            </p>
+          )}
+        </div>
+        <div className="form-control w-full max-w-xs">
+          <label className="label">
+            <span className="label-text font-semibold">First Name</span>
+          </label>
+          <input
+            {...register("firstName", { required: "Name is required" })}
             type="text"
             placeholder="Type here"
             className="input input-bordered w-full max-w-lg"
           />
-          {errors.name && (
+          {errors.firstName && (
             <p className="text-red-600" role="alert">
-              {errors.name?.message}
+              {errors.firstName?.message}
             </p>
           )}
         </div>
         <div className="form-control w-full max-w-xs">
           <label className="label">
-            <span className="label-text font-semibold">Email</span>
+            <span className="label-text font-semibold">Surname</span>
           </label>
           <input
-            {...register("email", { required: "Email Address is required" })}
-            type="email"
+            {...register("surname", { required: "Name is required" })}
+            type="text"
             placeholder="Type here"
             className="input input-bordered w-full max-w-lg"
           />
-          {errors.email && (
+          {errors.surname && (
             <p className="text-red-600" role="alert">
-              {errors.email?.message}
+              {errors.surname?.message}
             </p>
           )}
         </div>
         <div className="form-control w-full max-w-xs">
           <label className="label">
-            <span className="label-text font-semibold">Specialty</span>
+            <span className="label-text font-semibold">City</span>
+          </label>
+          <input
+            {...register("city", { required: "Email Address is required" })}
+            type="text"
+            placeholder="Type here"
+            className="input input-bordered w-full max-w-lg"
+          />
+          {errors.city && (
+            <p className="text-red-600" role="alert">
+              {errors.city?.message}
+            </p>
+          )}
+        </div>
+        <div className="form-control w-full max-w-xs">
+          <label className="label">
+            <span className="label-text font-semibold">Store</span>
           </label>
           <select
-            {...register("specialty", { required: "Speciality required" })}
+            {...register("store", { required: "Speciality required" })}
             className="select input-bordered w-full max-w-xs"
           >
-            {specialties.map((specialty) => (
-              <option key={specialty._id} value={specialty.name}>
-                {specialty.name}
+            {stores.map((store) => (
+              <option key={store} value={store}>
+                {store}
               </option>
             ))}
           </select>
-        </div>
-        <div className="form-control w-full max-w-xs">
-          <label className="label">
-            <span className="label-text font-semibold">Photo</span>
-          </label>
-          <input
-            {...register("img", { required: "Photo is required" })}
-            type="file"
-            className="input input-bordered w-full max-w-lg"
-          />
-          {errors.img && (
-            <p className="text-red-600" role="alert">
-              {errors.img?.message}
-            </p>
-          )}
         </div>
 
         <input

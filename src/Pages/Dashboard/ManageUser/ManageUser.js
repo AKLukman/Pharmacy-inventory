@@ -4,41 +4,42 @@ import Loading from "../../Shared/Loading/Loading";
 import { useState } from "react";
 import ConfiramationModal from "../../Shared/ConfiramationModal/ConfiramationModal";
 import { toast } from "react-hot-toast";
-import { daysInWeek } from "date-fns/constants";
 
-const ManageDoctors = () => {
-  const [deletingDoctor, setDeletingDoctor] = useState(null);
+const ManageUser = () => {
+  const [deletingUser, setDeletingUser] = useState(null);
 
   const closeModal = () => {
-    setDeletingDoctor(null);
+    setDeletingUser(null);
   };
 
   const {
-    data: doctors = [],
+    data: users = [],
     isLoading,
     refetch,
   } = useQuery({
-    queryKey: ["doctors"],
+    queryKey: ["pharmacy-user"],
     queryFn: async () => {
-      const res = await fetch("http://localhost:5000/api/v1/pharmacy/doctors");
+      const res = await fetch(
+        "http://localhost:5000/api/v1/pharmacy/pharmacy-user"
+      );
       const data = res.json();
       return data;
     },
   });
 
-  const handleDeleteDoctor = (doctor) => {
-    console.log(doctor);
-    fetch(`http://localhost:5000/api/v1/pharmacy/doctors/${doctor._id}`, {
+  const handleDeleUser = (user) => {
+    console.log(user);
+    fetch(`http://localhost:5000/api/v1/pharmacy/pharmacy-user/${user._id}`, {
       method: "DELETE",
     })
       .then((res) => res.json())
       .then((data) => {
         console.log(data);
-        // toast.success("Doctor deleted successfully!");
+        toast.success("User deleted successfully!");
 
         if (data.deletedCount > 0) {
           refetch();
-          toast.success(`Doctor ${doctor.name} deleted successfully`);
+          toast.success(`${user.firstName} deleted successfully`);
         }
       });
   };
@@ -54,43 +55,33 @@ const ManageDoctors = () => {
             <tr>
               <th></th>
               <th>Name</th>
-              <th>Email</th>
-              <th>Specialty</th>
+              <th>Store</th>
               <th>Action</th>
             </tr>
           </thead>
           <tbody>
             {/* row 1 */}
-            {doctors.map((doctor, i) => (
+            {users.map((user, i) => (
               <tr>
                 <th>{i + 1}</th>
                 <td>
                   <div className="flex items-center space-x-3">
-                    <div className="avatar">
-                      <div className="mask mask-squircle w-12 h-12">
-                        <img
-                          src={doctor?.image}
-                          alt="Avatar Tailwind CSS Component"
-                        />
-                      </div>
-                    </div>
                     <div>
-                      <div className="font-bold">{doctor.name}</div>
+                      <div className="font-bold">
+                        {user.firstName} {user.surname}
+                      </div>
                       {/* <div className="text-sm opacity-50">United States</div> */}
                     </div>
                   </div>
                 </td>
+
                 <td>
-                  <span className="">{doctor.email}</span>
+                  <span className="">{user.store}</span>
                 </td>
-                <td>
-                  <span className="badge badge-ghost badge-lg">
-                    {doctor.specialty}
-                  </span>
-                </td>
+
                 <th>
                   <label
-                    onClick={() => setDeletingDoctor(doctor)}
+                    onClick={() => setDeletingUser(user)}
                     htmlFor="confirmation-modal"
                     className="btn btn-ghost btn-xs"
                   >
@@ -102,18 +93,18 @@ const ManageDoctors = () => {
           </tbody>
         </table>
       </div>
-      {deletingDoctor && (
+      {deletingUser && (
         <ConfiramationModal
           title={`Are you sure want to delete?`}
-          message={`If you delete ${deletingDoctor.name}. It can not be undone!`}
+          message={`If you delete ${deletingUser.surname}. It can not be undone!`}
           closeModal={closeModal}
-          successAction={handleDeleteDoctor}
+          successAction={handleDeleUser}
           actionName="Delete"
-          modalData={deletingDoctor}
+          modalData={deletingUser}
         ></ConfiramationModal>
       )}
     </div>
   );
 };
 
-export default ManageDoctors;
+export default ManageUser;

@@ -34,7 +34,7 @@ const AppointmentModal = ({
     // and once data is sved then close the modal
     // and display success toast
 
-    fetch("https://pharmacy-inventory.vercel.app/api/v1/pharmacy/booking", {
+    fetch("http://localhost:5000/api/v1/pharmacy/booking", {
       method: "POST",
       headers: {
         "content-type": "application/json",

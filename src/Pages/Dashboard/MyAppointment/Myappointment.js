@@ -5,7 +5,7 @@ import { useQuery } from "react-query";
 
 const Myappointment = () => {
   const { user } = useContext(AuthContext);
-  const url = `https://pharmacy-inventory.vercel.app/api/v1/pharmacy/booking?email=${user?.email}`;
+  const url = `http://localhost:5000/api/v1/pharmacy/booking?email=${user?.email}`;
 
   const { data: bookings = [] } = useQuery({
     queryKey: ["booking", user?.email],

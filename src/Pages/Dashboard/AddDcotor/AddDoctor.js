@@ -17,7 +17,7 @@ const AddDoctor = () => {
     queryKey: ["doctor-specialty"],
     queryFn: async () => {
       const res = await fetch(
-        "https://pharmacy-inventory.vercel.app/api/v1/pharmacy/doctor-specialty"
+        "http://localhost:5000/api/v1/pharmacy/doctor-specialty"
       );
       const data = await res.json();
       return data;
@@ -44,16 +44,13 @@ const AddDoctor = () => {
             image: imageData.data.url,
           };
           //   post a doctor
-          fetch(
-            `https://pharmacy-inventory.vercel.app/api/v1/pharmacy/doctors`,
-            {
-              method: "POST",
-              headers: {
-                "content-type": "application/json",
-              },
-              body: JSON.stringify(doctor),
-            }
-          )
+          fetch(`http://localhost:5000/api/v1/pharmacy/doctors`, {
+            method: "POST",
+            headers: {
+              "content-type": "application/json",
+            },
+            body: JSON.stringify(doctor),
+          })
             .then((res) => res.json())
             .then((data) => {
               console.log(data);

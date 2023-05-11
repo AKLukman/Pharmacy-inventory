@@ -6,13 +6,11 @@ const useAdmin = (email) => {
 
   useEffect(() => {
     if (email) {
-      fetch(
-        `https://pharmacy-inventory.vercel.app/api/v1/pharmacy/users/admin/${email}`
-      )
+      fetch(`http://localhost:5000/api/v1/pharmacy/users/admin/${email}`)
         .then((res) => res.json())
         .then((data) => {
           console.log(data);
-          setIsAdmin(data.isAdmin);
+          setIsAdmin(data?.isAdmin);
           setIsAdminLoading(false);
         });
     }

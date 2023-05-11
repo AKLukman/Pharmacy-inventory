@@ -5,7 +5,7 @@ import Appointment from "../../Pages/Appointment/Appointment/Appointment";
 import Dashboard from "../../Pages/Dashboard/Dashboard/Dashboard";
 import Home from "../../Pages/Home/Home/Home";
 import Login from "../../Pages/Login/Login";
-import AllMedicine from "../../Pages/Medicine/AllMedicine/AllMedicine";
+// import AllMedicine from "../../Pages/Medicine/AllMedicine/AllMedicine";
 import SignUp from "../../Pages/SignUp/SignUp";
 import PrivateRoutes from "../PrivateRoutes/PrivateRoutes";
 import DashboardLayout from "../../Layout/DashboardLayout";
@@ -25,6 +25,11 @@ import HanleyMedicineDetails from "../../Pages/MedicineStore/HanleyStore/HanleyM
 import LongtonStore from "../../Pages/MedicineStore/LongtonStore/LongtonStore";
 import LongtonMedicineDetails from "../../Pages/MedicineStore/LongtonStore/LongtonMedicineDetails";
 import Sales from "../../Pages/Dashboard/Sales/Sales";
+import StuffRoute from "../StuffRoute/StuffRoute";
+
+import AddUsers from "../../Pages/Dashboard/AddUsers/AddUsers";
+import ManageUser from "../../Pages/Dashboard/ManageUser/ManageUser";
+import ManageMedicine from "../../Pages/Dashboard/ManageMedicine/ManageMedicine";
 
 export const router = createBrowserRouter([
   {
@@ -46,10 +51,10 @@ export const router = createBrowserRouter([
         element: <Appointment></Appointment>,
       },
       { path: "/about", element: <About></About> },
-      {
-        path: "/allmedicine",
-        element: <AllMedicine></AllMedicine>,
-      },
+      // {
+      //   path: "/allmedicine",
+      //   element: <AllMedicine></AllMedicine>,
+      // },
 
       // stoke store
       {
@@ -62,7 +67,7 @@ export const router = createBrowserRouter([
         element: <StokeMedicineDetails></StokeMedicineDetails>,
         loader: ({ params }) =>
           fetch(
-            `https://pharmacy-inventory.vercel.app/api/v1/pharmacy/stock-store-id-check-not-required/${params.id}`
+            `http://localhost:5000/api/v1/pharmacy/stock-store-id-check-not-required/${params.id}`
           ),
       },
 
@@ -76,7 +81,7 @@ export const router = createBrowserRouter([
         element: <TunstallMedicineDetails></TunstallMedicineDetails>,
         loader: ({ params }) =>
           fetch(
-            `https://pharmacy-inventory.vercel.app/api/v1/pharmacy/tunstall-store/${params.id}`
+            `http://localhost:5000/api/v1/pharmacy/tunstall-store/${params.id}`
           ),
       },
 
@@ -90,7 +95,7 @@ export const router = createBrowserRouter([
         element: <FentonMedicineDetails></FentonMedicineDetails>,
         loader: ({ params }) =>
           fetch(
-            `https://pharmacy-inventory.vercel.app/api/v1/pharmacy/fenton-store/${params.id}`
+            `http://localhost:5000/api/v1/pharmacy/fenton-store/${params.id}`
           ),
       },
 
@@ -104,7 +109,7 @@ export const router = createBrowserRouter([
         element: <HanleyMedicineDetails></HanleyMedicineDetails>,
         loader: ({ params }) =>
           fetch(
-            `https://pharmacy-inventory.vercel.app/api/v1/pharmacy/hanley-store/${params.id}`
+            `http://localhost:5000/api/v1/pharmacy/hanley-store/${params.id}`
           ),
       },
       // Longton store
@@ -117,7 +122,7 @@ export const router = createBrowserRouter([
         element: <LongtonMedicineDetails></LongtonMedicineDetails>,
         loader: ({ params }) =>
           fetch(
-            `https://pharmacy-inventory.vercel.app/api/v1/pharmacy/longton-store/${params.id}`
+            `http://localhost:5000/api/v1/pharmacy/longton-store/${params.id}`
           ),
       },
 
@@ -140,6 +145,11 @@ export const router = createBrowserRouter([
                 <Sales></Sales>
               </AdminRoute>
             ),
+            element: (
+              <StuffRoute>
+                <Sales></Sales>
+              </StuffRoute>
+            ),
           },
           {
             path: "/dashboard/allusers",
@@ -147,6 +157,11 @@ export const router = createBrowserRouter([
               <AdminRoute>
                 <AllUsers></AllUsers>
               </AdminRoute>
+            ),
+            element: (
+              <StuffRoute>
+                <AllUsers></AllUsers>
+              </StuffRoute>
             ),
           },
           {
@@ -156,6 +171,11 @@ export const router = createBrowserRouter([
                 <AddDoctor></AddDoctor>
               </AdminRoute>
             ),
+            element: (
+              <StuffRoute>
+                <AddDoctor></AddDoctor>
+              </StuffRoute>
+            ),
           },
           {
             path: "/dashboard/manage-doctors",
@@ -163,6 +183,50 @@ export const router = createBrowserRouter([
               <AdminRoute>
                 <ManageDoctors></ManageDoctors>
               </AdminRoute>
+            ),
+            element: (
+              <StuffRoute>
+                <ManageDoctors></ManageDoctors>
+              </StuffRoute>
+            ),
+          },
+          {
+            path: "/dashboard/pharmacy-user-registation",
+            element: (
+              <AdminRoute>
+                <AddUsers></AddUsers>
+              </AdminRoute>
+            ),
+            element: (
+              <StuffRoute>
+                <AddUsers></AddUsers>
+              </StuffRoute>
+            ),
+          },
+          {
+            path: "/dashboard/manage-user",
+            element: (
+              <AdminRoute>
+                <ManageUser></ManageUser>
+              </AdminRoute>
+            ),
+            element: (
+              <StuffRoute>
+                <ManageUser></ManageUser>
+              </StuffRoute>
+            ),
+          },
+          {
+            path: "/dashboard/all-medicine",
+            element: (
+              <AdminRoute>
+                <ManageMedicine></ManageMedicine>
+              </AdminRoute>
+            ),
+            element: (
+              <StuffRoute>
+                <ManageMedicine></ManageMedicine>
+              </StuffRoute>
             ),
           },
         ],
